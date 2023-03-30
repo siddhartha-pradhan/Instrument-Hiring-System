@@ -1,0 +1,70 @@
+﻿@model InstrumentHiringSystem.Models.OrderHeader
+
+@{
+    ViewData["Title"] = "Orders Index";
+
+    var status = Context.Request.Query["status"];
+    var pending = "text-primary";
+    var inprocess = "text-primary";
+    var completed = "text-primary";
+    var all = "text-primary";
+
+    switch (status)
+    {
+        case "pending":
+            pending = "bg-dark text-white";
+            break;
+        case "inprocess":
+            inprocess = "bg-dark text-white";
+            break;
+        case "completed":
+            completed = "bg-dark text-white";
+            break;
+        case "all":
+            all = "bg-dark text-white";
+            break;
+    }
+}
+
+<h1>Order Index</h1>
+
+<div class="container p-0">
+    <div class="d-flex justify-content-between">
+        <div class="pt-2">
+            <h2 class="text-primary pb-3">Order List</h2>
+        </div>
+        <div class="pt-2">
+            <ul class="list-group list-group-horizontal-sm">
+                <a style="text-decoration: none;" asp-controller="Order" asp-action="Index" asp-route-status="inprocess">
+                    <li class="list-group-item @inprocess">In Process</li>
+                </a>
+                <a style="text-decoration: none;" asp-controller="Order" asp-action="Index" asp-route-status="pending">
+                    <li class="list-group-item @pending">Payment Pending</li>
+                </a>
+                <a style="text-decoration: none;" asp-controller="Order" asp-action="Index" asp-route-status="completed">
+                    <li class="list-group-item @completed">Completed</li>
+                </a>
+                <a style="text-decoration: none;" asp-controller="Order" asp-action="Index" asp-route-status="all">
+                    <li class="list-group-item @all">All</li>
+                </a>
+            </ul>
+        </div>
+    </div>
+    <table id="tableData" class="table table-bordered table-striped">
+        <thead>
+            <tr class="table-info">
+                <th class="text-center">Order ID</th>
+                <th class="text-center">Name of the customer</th>
+                <th class="text-center">Phone Number</th>
+                <th class="text-center">Email</th>
+                <th class="text-center">Order Status</th>
+                <th class="text-center">Order Total</th>
+                <th class="text-center">Options</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+@section Scripts {
+    <script src="~/js/order.js"></script>
+}

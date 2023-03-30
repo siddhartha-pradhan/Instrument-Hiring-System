@@ -1,0 +1,90 @@
+﻿@model InstrumentHiringSystem.Models.ShoppingCart
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<form method="post">
+    <div class="card container pt-2">
+        <div class="card-header bg-dark text-light m-lg-0 row">
+            <div class="col-12 col-md-6">
+                <input asp-for="InstrumentID" hidden />
+                <h1 class="text-white-50">@Model.Instrument.Title</h1>
+                <p class="text-warning">@Model.Instrument.Author</p>
+            </div>
+            <div class="col-12 col-md-6 text-end pt-4">
+                <span class="badge bg-info pt-2" style="height: 30px;">@Model.Instrument.CoverType.Title</span>
+                <span class="badge bg-warning pt-2" style="height: 30px;">@Model.Instrument.Category.Title</span>
+            </div>
+        </div>
+        <div class="card-body row container">
+            <div class="container rounded p-2">
+                <div class="row">
+                    <div class="col-8 col-lg-8">
+                        <div class="row p-lg-2">
+                            <h5 class="col-3">
+                                ISBN: 
+                                <span class="col text-muted">@Model.Instrument.StandardNumber</span>
+                            </h5>
+                        </div>
+                        <div class="row p-lg-2">
+                            <h5 class="col pb-2">
+                                List Price: 
+                                <strike class="text-muted col">@Model.Instrument.ListPrice.ToString("c")</strike>
+                            </h5>
+                        </div>
+                        <div class="row text-center p-lg-2">
+                            <div class="p-1 col-2 pb-3 border-bottom">
+                                <div>Quantity</div>
+                            </div>
+                            <div class="p-1 col-2 pb-3 border-bottom">
+                                <div>1-20</div>
+                            </div>
+                            <div class="p-1 col-2 pb-3 border-bottom">
+                                <div>21-50</div>
+                            </div>
+                            <div class="p-1 col-2 pb-3 border-bottom">
+                                <div>50+</div>
+                            </div>
+                        </div>
+                        <div class="row text-center p-lg-1" style="font-weight: bold">
+                            <div class="p-1 col-2">
+                                <div>Price</div>
+                            </div>
+                            <div class="p-1 col-2">
+                                <div>@Model.Instrument.Price.ToString("c")</div>
+                            </div>
+                            <div class="p-1 col-2">
+                                <div>@Model.Instrument.Price20.ToString("c")</div>
+                            </div>
+                            <div class="p-1 col-2">
+                                <div>@Model.Instrument.Price50.ToString("c")</div>
+                            </div>
+                        </div>
+                        <div class="row pl-2 mt-1 mb-2 p-lg-2">
+                            <p class="text-secondary"><h5>@Model.Instrument.Description</h5></p>
+                        </div>
+                        <div class="row pl-2 p-lg-2">
+                            <div class="col-2 text-primary"><h4>Count</h4></div>
+                            <div class="col-6"><input asp-for="Count" class="form-control" /></div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-3 offset-lg-1 text-center">
+                        <img src="@Model.Instrument.ImageURL" width="75%" class="rounded" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="col-12 col-md-6 pb-1">
+                    <button type="submit" value="Add to Cart" class="btn btn-primary form-control" style="height: 50px">Add to Cart</button> 
+                </div>
+                <div class="col-12 col-md-6 pb-1">
+                    <a class="btn btn-success form-control p-3" asp-action="Index" style="height: 50px;">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

@@ -1,0 +1,42 @@
+﻿@model IEnumerable<InstrumentHiringSystem.Models.Instrument>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row pb-3">
+    @foreach (var instrument in Model)
+    { 
+        <div class="col-lg-3 col-md-6">
+            <div class="row p-2">
+                <div class="col-12 p-1" style="border: 1px solid black; border-radius: 5px;">
+                    <div class="container-item">
+                        <img src="@instrument.ImageURL" class="card-img-top rounded image"/>
+                        <div class="middle">
+                            <div class="order-text">Buy Now</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="p-lg-3">
+                            <p class="card-title h5 text-primary">@instrument.Title</p>
+                            <p class="card-title text-info">@instrument.Author</p>
+                        </div>
+                        <div class="ps-3">
+                            <p>List Price: <strike><b>$@instrument.ListPrice.ToString("0.00")</b></strike></p>
+                        </div>
+                        <div class="ps-3">
+                            <p>As Low as: <b>$@instrument.Price50.ToString("0.00")</b></p>
+                        </div>
+                    </div>
+                    <div>
+                        <a asp-action="Details" class="btn btn-primary form-control" asp-route-instrumentID="@instrument.ID">
+                            View Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+

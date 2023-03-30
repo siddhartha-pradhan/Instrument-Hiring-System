@@ -1,0 +1,78 @@
+﻿@model InstrumentHiringSystem.Models.ViewModels.ShoppingCartViewModel;
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<form method="post">
+    <div class="container">
+        <div class="card">
+            <div class="card-header bg-dark text-light ml-0">
+                <div class="row">
+                    <div class="col-6 pt-2">
+                        <i class="fa fa-shopping-cart"></i> &nbsp;
+                        Shopping Cart
+                    </div>
+                    <div class="col-6 text-end">
+                        <a asp-area="Template" asp-controller="Home" asp-action="Index" class="btn btn-outline-info btn-sm">Continue Shopping</a>
+                    </div>
+                </div>
+            </div> 
+            <div class="card-body">
+                @foreach (var item in Model.CartList)
+                {
+                    <div class="row">
+                        <div class="d-none d-lg-block col-lg-1 text-center py-2">
+                            <img src="@item.Instrument.ImageURL" class="rounded" width="100%" />
+                        </div>
+                        <div class="col-12 col-lg-6 pt-md-3">
+                            <h5><strong>@item.Instrument.Title</strong></h5>
+                            <p><small>@item.Instrument.Description</small></p>
+                        </div>
+                        <div class="col-12 col-lg-5 text-center row">
+                            <div class="col-4 text-md-end mt-4 pt-4">
+                                <h6><strong>@item.Price.ToString("c")
+                                        <span class="text-muted">&nbsp;x&nbsp;</span>@item.Count
+                                    </strong>
+                                </h6>
+                            </div>
+                            <div class="col-6 col-sm-4 col-lg-6 mt-4 pt-3">
+                                <div class="w-75 btn-group" role="group">
+                                    <a asp-action="Add" asp-route-cartID="@item.ID" class="btn btn-primary">
+                                        <i class="fa-solid fa-plus"></i>
+                                    </a> &nbsp;
+                                    <a asp-action="Substract" asp-route-cartID="@item.ID" class="btn btn-warning">
+                                        <i class="fa-solid fa-minus"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-2 col-sm-4 col-lg-2 text-end mt-4 pt-3">
+                                <a asp-action="Remove" asp-route-cartID="@item.ID" class="btn btn-danger">
+                                    <i class="fa-sharp fa-solid fa-trash"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                }
+                <div class="row">
+                    <div class="col-12 col-md-6 offset-md-6 col-lg-4 offset-lg-8 pr-4">
+                        <ul class="list-group">
+                            <li class="list-group-item d-flex justify-content-between bg-light">
+                                <span class="text-info">Total USD</span>
+                                <strong class="text-info">@Model.OrderHeader.OrderTotal.ToString("c")</strong>
+                            </li>
+                        </ul>
+                    </div> 
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="card-footer row">
+                    <div class="col-sm-12 col-lg-4 col-md-6 offset-lg-8 offset-md-6">
+                        <a asp-action="Summary" class="btn btn-success form-control">Summary</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

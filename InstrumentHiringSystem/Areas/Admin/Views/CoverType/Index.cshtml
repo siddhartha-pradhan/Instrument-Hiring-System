@@ -1,0 +1,33 @@
+﻿@model InstrumentHiringSystem.Models.CoverType
+
+@{
+    ViewData["Title"] = "Cover Type";
+}
+
+<partial name="_Notification" />
+
+<h1 class="mb-4">Cover Type Index</h1>
+
+<div class="row mb-3">
+    <div class="col-6">
+        <h2 class="text-primary">List of Cover Types</h2>
+    </div>
+    <div class="col-6 text-end">
+        <a class="btn btn-primary" asp-action="Upsert"><i class="fa-solid fa-plus"></i> &nbsp; Create A New Cover Type</a>
+    </div>
+</div>
+
+<div class="p-2 border rounded">
+    <table id="tableData" class="table table-striped table-bordered" style="width:100%">
+        <thead class="mt-2">
+            <tr class="table-info">
+                <th class="text-center">Cover Title</th>
+                <th class="text-center">Options</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+@section Scripts{
+    <script src="~/js/covertype.js"></script>
+}

@@ -1,0 +1,164 @@
+﻿@model InstrumentHiringSystem.Models.ViewModels.InstrumentViewModel
+
+@{
+    ViewData["Title"] = "Instrument";
+    var title = "Create a new Instrument";
+}
+
+<h1 class="mb-4">Instrument Index</h1>
+
+<form method="post" enctype="multipart/form-data">
+    <div class="row mb-3">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        @if (@Model.Instrument.ID != 0)
+        {
+            title = "Edit an existing Instrument";
+        }
+        <div class="col-6">
+            <h2 class="text-primary">@title</h2>
+        </div>
+        <div class="pt-4">
+            <div class="form-group row">
+                <input asp-for="Instrument.ID" class="form-control" type="hidden" />
+                <div class="row">
+                    <div class="col-6">
+                        <div class="mb-4 row">
+                            <label asp-for="Instrument.Title" class="mb-2"></label>
+                            <input asp-for="Instrument.Title" class="form-control ms-2" />
+                            <span asp-validation-for="Instrument.Title" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-4 row">
+                            <label asp-for="Instrument.Description" class="mb-2"></label>
+                            <input asp-for="Instrument.Description" rows="3" class="form-control ms-2" />
+                            <span asp-validation-for="Instrument.Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-4 row">
+                            <label asp-for="Instrument.ImageURL" class="mb-2"></label>
+                            <input type="file" id="uploadImage" onchange="readURL(this);" 
+                                   name="imageFile" class="form-control ms-2" accept="image/png, image/gif, image/jpeg" />
+                            <span asp-validation-for="Instrument.ImageURL" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="row mt-4">
+                            <div class="row border border-primary" style="min-height: 225px; width: 225px; margin: auto">
+                                <img id="previewImage" src="@Model.Instrument.ImageURL" style="width: 225px; height: 225px;" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-4 col-6">
+                    <label asp-for="Instrument.StandardNumber" class="mb-2"></label>
+                    <input asp-for="Instrument.StandardNumber" class="form-control " />
+                    <span asp-validation-for="Instrument.StandardNumber" class="text-danger"></span>
+                </div>
+
+                <div class="mb-4 col-6">
+                    <label asp-for="Instrument.Author" class="mb-2"></label>
+                    <input asp-for="Instrument.Author" class="form-control" />
+                    <span asp-validation-for="Instrument.Author" class="text-danger"></span>
+                </div>
+
+                <div class="mb-4 col-6">
+                    <label asp-for="Instrument.ListPrice" class="mb-2"></label>
+                    <input asp-for="Instrument.ListPrice" class="form-control" />
+                    <span asp-validation-for="Instrument.ListPrice" class="text-danger"></span>
+                </div>
+
+                <div class="mb-4 col-6">
+                    <label asp-for="Instrument.Price" class="mb-2"></label>
+                    <input asp-for="Instrument.Price" class="form-control" />
+                    <span asp-validation-for="Instrument.Price" class="text-danger"></span>
+                </div>
+
+                <div class="mb-4 col-6">
+                    <label asp-for="Instrument.Price20" class="mb-2"></label>
+                    <input asp-for="Instrument.Price20" class="form-control" />
+                    <span asp-validation-for="Instrument.Price20" class="text-danger"></span>
+                </div>
+
+                <div class="mb-4 col-6">
+                    <label asp-for="Instrument.Price50" class="mb-2"></label>
+                    <input asp-for="Instrument.Price50" class="form-control" />
+                    <span asp-validation-for="Instrument.Price50" class="text-danger"></span>
+                </div>
+
+                <div class="mb-4 col-6">
+                    <label asp-for="Instrument.CategoryID" class="mb-2"></label>
+                    <select asp-for="Instrument.CategoryID" asp-items="@Model.CategoryList" class="form-select">
+                        <option disabled selected>Select a Category</option>
+                    </select>
+                    <span asp-validation-for="Instrument.CategoryID" class="text-danger"></span>
+                </div>
+
+                <div class="mb-4 col-6">
+                    <label asp-for="Instrument.CoverTypeID" class="mb-2"></label>
+                    <select asp-for="Instrument.CoverTypeID" asp-items="@Model.CoverTypeList" class="form-select">
+                        <option disabled selected>Select a CoverType</option>
+                    </select>
+                    <span asp-validation-for="Instrument.CoverTypeID" class="text-danger"></span>
+                </div>
+
+                <input asp-for="Instrument.CreatedAt" class="form-control mt-2" type="hidden" />
+                <input asp-for="Instrument.LastModifiedAt" class="form-control mt-2" type="hidden" />
+            </div>
+            <div class="form-group row">
+                @if (Model.Instrument.ID != 0)
+                {
+                    <div class="col-3">
+                        <button type="submit" onclick="return ValidateInput()" class="btn btn-primary form-control">Update</button>
+                    </div>
+                    <div class="col-3">
+                        <a asp-action="Index" class="btn btn-primary form-control">Back to List</a>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-3">
+                        <button type="submit" onclick="return ValidateInput()" class="btn btn-primary form-control">Create</button>
+                    </div>
+                    <div class="col-3">
+                        <a asp-action="Index" class="btn btn-primary form-control">Back to List</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        function ValidateInput() {
+            if ($("#uploadImage").val() == "") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Picture not uploaded.',
+                    text: 'Please input an image of the instrument before continuing.'
+                })
+                return false;
+            }
+            return true;
+        }
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#previewImage')
+                        .attr('src', e.target.result)
+                        .width(225)
+                        .height(225);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+}
